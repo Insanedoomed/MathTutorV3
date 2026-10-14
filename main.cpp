@@ -18,20 +18,23 @@ using namespace std; //sets standard namespace
 //start of the main function
 int main() {
     //initializing variables
+    enum MathType {MT_ADD=1 , MT_SUB=2 , MT_MUL=3 , MT_DIV=4};
+    MathType mathType = MT_ADD;
+    mathType = static_cast<MathType>(rand() % 4 + 1);
     double userAnswer; // The user's answer to the math question
     double correctAns; // The correct answer
-    int randVar2 = 0; // the 2nd random number between 1 and 10
-    int randVar1 = 0; // the 1st random number between 1 and 10
-    int mathVar = 0; // Random number {1=add, 2=sub, 3=multi, 4=div}
+    int randVar3 = 0; // The 3rd Random Number Between 20 and 30
+    int leftNum = 0; // the 2nd random number between 10 and 20
+    int rightNum = 0; // the 1st random number between 1 and 10
     int temp = 0; // Uses to swap two values
     char mathSymbol; // {+, -, *, /}
     // Our range of random
     srand((time(0))); // seed the random method with the current time
 
     //Generate the random numbers between 1 and 10 for the question
-    randVar2 = ((rand() % 10) + 1);
-    randVar1 = ((rand() % 10) + 1);
-    mathVar = ((rand() % 4) + 1);
+    leftNum = ((rand() % 10) + 1);
+    rightNum = ((rand() % 10) + 1);
+
 
     string userName;
 
@@ -76,50 +79,54 @@ int main() {
             "! So you have finally found me. If you truly seek the knowledge hidden within these ancient halls," <<
             endl;
     cout << " you must first prove your mind is sharp." << endl;
+
+
+
+
     //Switch to calculate the correct answer and which math operator to display
-    switch (mathVar) {
-        case 1: //addition
-            correctAns = randVar1 + randVar2;
+    switch (mathType) {
+        MT_ADD 1: //addition
+            correctAns = rightNum + leftNum;
             mathSymbol = '+';
             break;
 
 
-        case 2: //subtraction
+        MT_SUB 2: //subtraction
 
             // Ensures that the left number is greater than the right to avoid negative numbers
-            if (randVar1 < randVar2) {
-                temp = randVar1;
-                randVar1 = randVar2;
-                randVar2 = temp;
+            if (rightNum < leftNum) {
+                temp = rightNum;
+                rightNum = leftNum;
+                leftNum = temp;
             }
-            correctAns = randVar1 - randVar2;
+            correctAns = rightNum - leftNum;
             mathSymbol = '-';
             break;
 
 
-        case 3: //Multiplication
-            correctAns = randVar1 * randVar2;
+        MT_MUL 3: //Multiplication
+            correctAns = rightNum * leftNum;
             mathSymbol = '*';
             break;
 
 
-        case 4: //Division
+        MT_DIV 4: //Division
             //avoiding answers with fractions
-            correctAns = randVar1;
-            randVar1 *= randVar2;
+            correctAns = rightNum;
+            rightNum *= leftNum;
             mathSymbol = '/';
             break;
 
 
         default: //error handling - should never happen
-            cout << "Invalid question type: " << mathVar << endl;
+            cout << "Invalid question type: " << mathType << endl;
             cout << "Program ended with an error -1" << endl;
             cout << "Please report this error to Brayden Tolle" << endl;
             return -1;
     } //End of the switch
 
     // Prompts the user to answer a random math question
-    cout << userName << " what is " << randVar1 << mathSymbol << randVar2 << "?" << endl;
+    cout << userName << " what is " << rightNum << mathSymbol << leftNum << "?" << endl;
 
     cin >> userAnswer;
     // This should display if they got the answer correct

@@ -12,6 +12,7 @@ and then it outputs an end of program message.
 #include <cstdlib> // for srand and rand
 #include <string> // for string data types
 #include <ctime> // for time seeding
+#include <limits> // for the use of numeric_limits
 
 using namespace std; //sets standard namespace
 
@@ -128,7 +129,14 @@ int main() {
     // Prompts the user to answer a random math question
     cout << userName << " what is " << rightNum << mathSymbol << leftNum << "?" << endl;
 
-    cin >> userAnswer;
+    //Start of Loop that loops until the user enters a valid input
+    while (!(cin >> userAnswer)) {
+        cin.clear(); // clears the cin error flag
+        cin.ignore (numeric_limits<streamsize>::max(), '\n'); // ignores the max input, up to '\n'
+        cout << "Invalid answer apprentice!" << endl;
+        cout << "Please enter a number (like 1,2,3), Apprentice!" << endl;
+    } // end of loop that handles correct user data
+
     // This should display if they got the answer correct
     //If not, it will display the correct answer
     if (userAnswer == correctAns) {

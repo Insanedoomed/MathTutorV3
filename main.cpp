@@ -3,7 +3,7 @@ Program: MathTutorV3
 Programmers: Joe Bracht and Brayden Tolle
 Date: 10/12/2026
 Section 3: 12:00
-Github Repo: https://github.com/lashanna-werth250/MathTutorV2
+Github Repo: https://github.com/Insanedoomed/MathTutorV3
 Description: A wizard/magic themed math tutor that displays the intro featuring
 ASCII art and jokes, it then asks a simple math question which is checked for correctness
 and then it outputs an end of program message.
@@ -16,11 +16,11 @@ and then it outputs an end of program message.
 
 using namespace std; //sets standard namespace
 
-//start of the main function
+//start of the main function; Joe is handling the variable documentation from Brayden's computer
 int main() {
-    srand(time(0));
-    const int MAX_ATTEMPTS = 3;
-    const int LEVEL_RANGE = 10;
+    srand(time(0)); // Seed first; used to randomize the numeric operator (+,-,*,/)
+    const int MAX_ATTEMPTS = 3; // Our max attempts; stays the same throughout program
+    const int LEVEL_RANGE = 10; // Starting range of 1-10; adds ten each level up
 
     //initializing variables
 
@@ -31,20 +31,14 @@ int main() {
     int rightNum = 0; // the 2nd random number between 1 and level change
     int leftNum = 0; // the 1st random number between 1 and level change
     int temp = 0; // Uses to swap two values
-    int questionNumber = 0;
-    int mathLevel = 1;
-    int attempt = 0;
-    int LevelRange = LEVEL_RANGE;
-    int totalIncorrect = 0;
-    int totalCorrect = 0;
+    int questionNumber = 0; // Current question number
+    int mathLevel = 1; // Current Math level
+    int attempt = 0; // Current attempt number
+    int LevelRange = LEVEL_RANGE; // turns it into a variable that later is used to check for equality
+    int totalIncorrect = 0; // Current number of incorrect questions; used later for leveling down
+    int totalCorrect = 0; // Current number of Correct questions; used for later for leveling up
     char mathSymbol; // {+, -, *, /}
-    // Our range of random
-
-
-
-
-
-    string userName;
+    string userName; // User's name
 
     //Display the program's header
     cout <<
@@ -87,14 +81,16 @@ int main() {
             "! So you have finally found me. If you truly seek the knowledge hidden within these ancient halls," <<
             endl;
     cout << " you must first prove your mind is sharp." << endl;
+    // start of loop
 do {
-    questionNumber++;
+    questionNumber++; // each loop, it adds one to question each time the user responds yes
     enum MathType {MT_ADD=1 , MT_SUB=2 , MT_MUL=3 , MT_DIV=4}; // Our Enum for all the problems
-    MathType mathType = MT_ADD;
+    MathType mathType = MT_ADD; // sets MathType to a one
     mathType = static_cast<MathType>(rand() % 4 + 1); //Turning into random
     //Generate the random numbers between 1 and 10 for the question
-    rightNum = ((rand() % LevelRange) + 1);
-    leftNum = ((rand() % LevelRange) + 1);
+    rightNum = ((rand() % LevelRange) + 1); // Value from 1-whatever level the user is
+    leftNum = ((rand() % LevelRange) + 1); // Value from 1-whatever level the user is
+    // Ensures that Left num is the larger number
     if (leftNum < rightNum) {
         temp = leftNum;
         leftNum = rightNum;
@@ -133,14 +129,15 @@ do {
         default: //error handling - should never happen
             cout << "Invalid question type: " << mathType << endl;
             cout << "Program ended with an error -1" << endl;
-            cout << "Please report this error to Brayden Tolle" << endl;
+            cout << "Please report this error to Brayden Tolle or Joe Bracht" << endl;
             return -1;
     } //End of the switch
-    for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-        cout << "You're on question " << questionNumber << endl;
-        cout << "out of level " << mathLevel << endl;
-        cout << "and on " << attempt << " out of " << MAX_ATTEMPTS << " attempts" << endl;
-        cout << userName << " what is " << leftNum << mathSymbol << rightNum << "?" << endl;
+    // Start of for loop
+    for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) { // If attempt is less than or equal to MAX_ATTEMPTS, it will add one attempt
+        cout << "You're on question " << questionNumber << endl; // Question number
+        cout << "out of level " << mathLevel << endl; // Level number
+        cout << "and on " << attempt << " out of " << MAX_ATTEMPTS << " attempts" << endl; // Attempts left out of the attempts left
+        cout << userName << " what is " << leftNum << mathSymbol << rightNum << "?" << endl; // Asks question
         //Start of Loop that loops until the user enters a valid input
         while (!(cin >> userAnswer)) {
             cin.clear(); // clears the cin error flag
@@ -149,16 +146,17 @@ do {
             cout << "Please enter a number (like 1,2,3), Apprentice!" << endl;
             cout << userName << " what is " << leftNum << mathSymbol << rightNum << "?" << endl;
         } // end of loop that handles correct user data
+        // if user right, then it adds one to total correct
         if (userAnswer == correctAns) {
             cout << "Good job! You Got The Question Right!" << endl;
             totalCorrect++;
             break;
         } else {
             totalIncorrect++;
-            if (attempt < MAX_ATTEMPTS) {
+            if (attempt < MAX_ATTEMPTS) { // IF wrong, your number of attempts goes up
                 cout << "Not quite, apprentice!" << endl;
                 cout << "You have " << MAX_ATTEMPTS - attempt << " attempets left" << endl;
-            } else {
+            } else { // Runs if the user gets three incorrect
                 cout << "I'm So Disappointed In You Apprentice..." << endl;
                 cout << "The correct answer was " << correctAns << "." << endl;
                 totalIncorrect++;
@@ -166,6 +164,7 @@ do {
 
         }
     } // End of For
+    // Leveling up
     if (totalCorrect >= 3) {
         mathLevel++;
         LevelRange += LEVEL_RANGE;
@@ -173,7 +172,7 @@ do {
         totalIncorrect = 0;
         cout << "You have leveled up to level " << mathLevel << "!" << endl;
         cout << "Numbers will now go up to " << LevelRange << "." << endl;
-    }
+    } // leveling down
         else if (totalIncorrect >= 3) {
             if (LevelRange > LEVEL_RANGE) {
                 mathLevel--;
@@ -181,22 +180,22 @@ do {
                 totalCorrect = 0;
                 totalIncorrect = 0;
                 cout << "You have leveled down to " << mathLevel << "!" << endl;
-                cout << "Number will go down to"  << LevelRange << "!" << endl;
+                cout << "Number will go down to "  << LevelRange << "!" << endl;
                 cout << "The correct answer was " << correctAns << "." << endl;
             }
-            totalCorrect = 0;
-            totalIncorrect = 0;
+            totalCorrect = 0; // clears total correct
+            totalIncorrect = 0; // clears total incorrect
         }
 
 
 
-    getline(cin,userInput); // Clears it
-while (true)  {
+    getline(cin,userInput); // Clears user input
+while (true)  { // asks the user if they want another question
     cout << "Would you like a other question Apprentice? (y=yes/n=no"<< endl;
     getline(cin,userInput);
     for (int i = 0; i < userInput.length(); i++) {
         userInput[i] = tolower(userInput[i]);
-    }
+    } // user chooses yes or no
     if (userInput == "y" || userInput == "yes" ||
         userInput == "n" || userInput == "no") {
         break;
@@ -208,7 +207,7 @@ while (true)  {
 
 
 
-} while (userInput == "y" || userInput == "yes");
+} while (userInput == "y" || userInput == "yes"); // User's answer to the yes or no
 
     cout << "Thank you this is all for now!" << endl;
 

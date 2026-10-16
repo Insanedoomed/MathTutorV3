@@ -18,23 +18,30 @@ using namespace std; //sets standard namespace
 
 //start of the main function
 int main() {
+    srand(time(0));
+    const int MAX_ATTEMPTS = 3;
+    const int LEVEL_RANGE = 10;
+
     //initializing variables
-    enum MathType {MT_ADD=1 , MT_SUB=2 , MT_MUL=3 , MT_DIV=4};
-    MathType mathType = MT_ADD;
-    mathType = static_cast<MathType>(rand() % 4 + 1);
+
+    string userInput = "?";
     double userAnswer; // The user's answer to the math question
-    double correctAns; // The correct answer
-    int randVar3 = 0; // The 3rd Random Number Between 20 and 30
-    int leftNum = 0; // the 2nd random number between 10 and 20
-    int rightNum = 0; // the 1st random number between 1 and 10
+    double correctAns; // The correct answer\
+
+    int rightNum = 0; // the 2nd random number between 1 and level change
+    int leftNum = 0; // the 1st random number between 1 and level change
     int temp = 0; // Uses to swap two values
+    int questionNumber = 0;
+    int mathLevel = 1;
+    int attempt = 0;
+    int LevelRange = LEVEL_RANGE;
+    int totalIncorrect = 0;
+    int totalCorrect = 0;
     char mathSymbol; // {+, -, *, /}
     // Our range of random
-    srand((time(0))); // seed the random method with the current time
 
-    //Generate the random numbers between 1 and 10 for the question
-    leftNum = ((rand() % 10) + 1);
-    rightNum = ((rand() % 10) + 1);
+
+
 
 
     string userName;
@@ -80,44 +87,48 @@ int main() {
             "! So you have finally found me. If you truly seek the knowledge hidden within these ancient halls," <<
             endl;
     cout << " you must first prove your mind is sharp." << endl;
-
-
-
-
+do {
+    questionNumber++;
+    enum MathType {MT_ADD=1 , MT_SUB=2 , MT_MUL=3 , MT_DIV=4}; // Our Enum for all the problems
+    MathType mathType = MT_ADD;
+    mathType = static_cast<MathType>(rand() % 4 + 1); //Turning into random
+    //Generate the random numbers between 1 and 10 for the question
+    rightNum = ((rand() % LevelRange) + 1);
+    leftNum = ((rand() % LevelRange) + 1);
+    if (leftNum < rightNum) {
+        temp = leftNum;
+        leftNum = rightNum;
+        rightNum = temp;
+    }
     //Switch to calculate the correct answer and which math operator to display
     switch (mathType) {
-        MT_ADD 1: //addition
-            correctAns = rightNum + leftNum;
+        case MT_ADD: // addition
+            correctAns = leftNum + rightNum;
             mathSymbol = '+';
             break;
 
-
-        MT_SUB 2: //subtraction
-
-            // Ensures that the left number is greater than the right to avoid negative numbers
-            if (rightNum < leftNum) {
-                temp = rightNum;
-                rightNum = leftNum;
-                leftNum = temp;
+        case MT_SUB: // subtraction
+            // Ensure the left number is the bigger one to avoid negatives
+            if (leftNum < rightNum) {
+                temp = leftNum;
+                leftNum = rightNum;
+                rightNum = temp;
             }
-            correctAns = rightNum - leftNum;
+            correctAns = leftNum - rightNum;
             mathSymbol = '-';
             break;
 
-
-        MT_MUL 3: //Multiplication
-            correctAns = rightNum * leftNum;
+        case MT_MUL: // multiplication
+            correctAns = leftNum * rightNum;
             mathSymbol = '*';
             break;
 
-
-        MT_DIV 4: //Division
-            //avoiding answers with fractions
-            correctAns = rightNum;
-            rightNum *= leftNum;
+        case MT_DIV: // division
+            // Build the dividend so the answer is always a whole number
+            correctAns = leftNum;
+            leftNum = leftNum * rightNum;
             mathSymbol = '/';
             break;
-
 
         default: //error handling - should never happen
             cout << "Invalid question type: " << mathType << endl;
@@ -125,31 +136,81 @@ int main() {
             cout << "Please report this error to Brayden Tolle" << endl;
             return -1;
     } //End of the switch
+    for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+        cout << "You're on question " << questionNumber << endl;
+        cout << "out of level " << mathLevel << endl;
+        cout << "and on " << attempt << " out of " << MAX_ATTEMPTS << " attempts" << endl;
+        cout << userName << " what is " << leftNum << mathSymbol << rightNum << "?" << endl;
+        //Start of Loop that loops until the user enters a valid input
+        while (!(cin >> userAnswer)) {
+            cin.clear(); // clears the cin error flag
+            cin.ignore (numeric_limits<streamsize>::max(), '\n'); // ignores the max input, up to '\n'
+            cout << "Invalid answer apprentice!" << endl;
+            cout << "Please enter a number (like 1,2,3), Apprentice!" << endl;
+            cout << userName << " what is " << leftNum << mathSymbol << rightNum << "?" << endl;
+        } // end of loop that handles correct user data
+        if (userAnswer == correctAns) {
+            cout << "Good job! You Got The Question Right!" << endl;
+            totalCorrect++;
+            break;
+        } else {
+            totalIncorrect++;
+            if (attempt < MAX_ATTEMPTS) {
+                cout << "Not quite, apprentice!" << endl;
+                cout << "You have " << MAX_ATTEMPTS - attempt << " attempets left" << endl;
+            } else {
+                cout << "I'm So Disappointed In You Apprentice..." << endl;
+                cout << "The correct answer was " << correctAns << "." << endl;
+                totalIncorrect++;
+            }
 
-    // Prompts the user to answer a random math question
-    cout << userName << " what is " << rightNum << mathSymbol << leftNum << "?" << endl;
-
-    //Start of Loop that loops until the user enters a valid input
-    while (!(cin >> userAnswer)) {
-        cin.clear(); // clears the cin error flag
-        cin.ignore (numeric_limits<streamsize>::max(), '\n'); // ignores the max input, up to '\n'
-        cout << "Invalid answer apprentice!" << endl;
-        cout << "Please enter a number (like 1,2,3), Apprentice!" << endl;
-    } // end of loop that handles correct user data
-
-    // This should display if they got the answer correct
-    //If not, it will display the correct answer
-    if (userAnswer == correctAns) {
-        cout << "Good job! You Got The Question Right!" << endl;
-        cout << endl;
-        // tells the user goodbye
-        cout << "This is all for our program! I hope you had a fantastic time!!" << endl;
-    } else {
-        cout << "I'm So Disappointed In You Apprentice..." << endl;
-        cout << "The correct answer was " << correctAns << "." << endl;
-        cout << endl;
-        cout << "Please try again, Apprentice!" << endl;
+        }
+    } // End of For
+    if (totalCorrect >= 3) {
+        mathLevel++;
+        LevelRange += LEVEL_RANGE;
+        totalCorrect = 0;
+        totalIncorrect = 0;
+        cout << "You have leveled up to level " << mathLevel << "!" << endl;
+        cout << "Numbers will now go up to " << LevelRange << "." << endl;
     }
+        else if (totalIncorrect >= 3) {
+            if (LevelRange > LEVEL_RANGE) {
+                mathLevel--;
+                LevelRange = LEVEL_RANGE;
+                totalCorrect = 0;
+                totalIncorrect = 0;
+                cout << "You have leveled down to " << mathLevel << "!" << endl;
+                cout << "Number will go down to"  << LevelRange << "!" << endl;
+                cout << "The correct answer was " << correctAns << "." << endl;
+            }
+            totalCorrect = 0;
+            totalIncorrect = 0;
+        }
+
+
+
+    getline(cin,userInput); // Clears it
+while (true)  {
+    cout << "Would you like a other question Apprentice? (y=yes/n=no"<< endl;
+    getline(cin,userInput);
+    for (int i = 0; i < userInput.length(); i++) {
+        userInput[i] = tolower(userInput[i]);
+    }
+    if (userInput == "y" || userInput == "yes" ||
+        userInput == "n" || userInput == "no") {
+        break;
+            }
+    cout << "Please enter y, yes, n, no" << endl;
+}
+
+
+
+
+
+} while (userInput == "y" || userInput == "yes");
+
+    cout << "Thank you this is all for now!" << endl;
 
     return 0;
 }

@@ -34,7 +34,7 @@ int main() {
     int questionNumber = 0; // Current question number
     int mathLevel = 1; // Current Math level
     int attempt = 0; // Current attempt number
-    int LevelRange = LEVEL_RANGE; // turns it into a variable that later is used to check for equality
+    int LevelRange = LEVEL_RANGE; // Sent constant to 10 level range is a runnning total num.
     int totalIncorrect = 0; // Current number of incorrect questions; used later for leveling down
     int totalCorrect = 0; // Current number of Correct questions; used for later for leveling up
     char mathSymbol; // {+, -, *, /}
@@ -176,11 +176,11 @@ do {
         else if (totalIncorrect >= 3) {
             if (LevelRange > LEVEL_RANGE) {
                 mathLevel--;
-                LevelRange = LEVEL_RANGE;
+                LevelRange -= LEVEL_RANGE;
                 totalCorrect = 0;
                 totalIncorrect = 0;
                 cout << "You have leveled down to " << mathLevel << "!" << endl;
-                cout << "Number will go down to "  << LevelRange << "!" << endl;
+                cout << "Number will go down by "  << LevelRange << "!" << endl;
                 cout << "The correct answer was " << correctAns << "." << endl;
             }
             totalCorrect = 0; // clears total correct

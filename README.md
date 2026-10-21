@@ -377,7 +377,7 @@ Please enter a number (like 1,2,3), Apprentice!
 Brayden what is 1+1?
 Process finished with exit code 0
 
-
+// if we missed anything please let us know. Also we are not sure if it was supposed to be 3 attempts per level or question so we did each question.
 ```
 
 [Back to Top](#math-tutor-v1)

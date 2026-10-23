@@ -222,6 +222,7 @@ while (true)  { // asks the user if they want another question
 
 } while (userInput == "y" || userInput == "yes"); // User's answer to the yes or no
 
+    cout << "This is MathTutorV3, thanks for playing!" << endl;
     cout << "Thank you this is all for now!" << endl;
 
     return 0;

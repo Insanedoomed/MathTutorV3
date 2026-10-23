@@ -14,6 +14,7 @@ and then it outputs an end of program message.
 #include <ctime> // for time seeding
 #include <limits> // for the use of numeric_limits
 #include <ctype.h> // Checks numbers and characters
+#include <iomanip> // Adds for width issues for our box (We asked jesse how to)
 
 using namespace std; //sets standard namespace
 
@@ -85,6 +86,7 @@ int main() {
             "! So you have finally found me. If you truly seek the knowledge hidden within these ancient halls," <<
             endl;
     cout << " you must first prove your mind is sharp." << endl;
+    cout << endl;
 
     // start of loop
 do {
@@ -144,10 +146,14 @@ do {
 
     // Start of for loop
     for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) { // If attempt is less than or equal to MAX_ATTEMPTS, it will add one attempt
-        cout << "You're on question " << questionNumber << endl; // Question number
-        cout << "out of level " << mathLevel << endl; // Level number
-        cout << "and on " << attempt << " out of " << MAX_ATTEMPTS << " attempts" << endl; // Attempts left out of the attempts left
-        cout << userName << " what is " << leftNum << mathSymbol << rightNum << "?" << endl; // Asks question
+       cout << " |----------------------------------|" << endl;
+        cout << " | Question: "  << left << setw(23) << questionNumber << "|" << endl;
+        cout << " | Attempts: "  << attempt << " out of "  << left << setw(14)  << MAX_ATTEMPTS <<     "|"<< endl;;
+        cout << " | MathLevel: " <<left << setw(22) << mathLevel <<"|"<< endl;
+        cout << " |----------------------------------|" << endl;
+        cout << endl;
+        cout << userName << ", what is " << leftNum << mathSymbol << rightNum << "?" << endl; // Asks question
+        cout << endl;
 
         //Start of Loop that loops until the user enters a valid input
         while (!(cin >> userAnswer)) {
@@ -161,6 +167,7 @@ do {
         // if user right, then it adds one to total correct
         if (userAnswer == correctAns) {
             cout << "Good job! You Got The Question Right!" << endl;
+            cout << endl;
             totalCorrect++;
             break;
 
@@ -168,11 +175,14 @@ do {
             totalIncorrect++;
             if (attempt < MAX_ATTEMPTS) { // IF wrong, your number of attempts goes up
                 cout << "Not quite, apprentice!" << endl;
-                cout << "You have " << MAX_ATTEMPTS - attempt << " attempets left" << endl;
+                 cout << endl;
+                cout << "You have " << MAX_ATTEMPTS - attempt << " attempts left" << endl;
+                cout << endl;
+
 
             } else { // Runs if the user gets three incorrect
                 cout << "I'm So Disappointed In You Apprentice..." << endl;
-                cout << "The correct answer was " << correctAns << "." << endl;
+                cout << endl;
                 totalIncorrect++;
             }
         }
@@ -182,8 +192,9 @@ do {
     if (totalCorrect >= 3) {
         mathLevel++;
         LevelRange += LEVEL_RANGE;
-        totalCorrect = 0;
-        totalIncorrect = 0;
+        totalCorrect = 0;// clears it for next level.
+        totalIncorrect = 0;// clears it for next level.
+        questionNumber = 0;// Sets the question to 0 to clear it for the new level. EX: question 1 out of LVL 3
         cout << "You have leveled up to level " << mathLevel << "!" << endl;
         cout << "Numbers will now go up to " << LevelRange << "." << endl;
     }
@@ -192,12 +203,17 @@ do {
             if (LevelRange > LEVEL_RANGE) {
                 mathLevel--;
                 LevelRange = LEVEL_RANGE;
-                totalCorrect = 0;
-                totalIncorrect = 0;
-                cout << "You have leveled down to " << mathLevel << "!" << endl;
-                cout << "Number will go down to "  << LevelRange << "!" << endl;
-                cout << "The correct answer was " << correctAns << "." << endl;
+                totalCorrect = 0;// clears it for next level.
+                totalIncorrect = 0;// clears it for next level.
+                questionNumber = 0; // Sets the question to 0 to clear it for the new level. EX: question 1 out of LVL 2
+                cout << " |----------------------------------|" << endl;
+                cout << " | CorrectAnswer: " << left << setw(18) << correctAns << "|" << endl;
+                cout << " | NumDown: " << left << setw(24)  << LevelRange << "|"<< endl;;
+                cout << " | LevelDown: " << left << setw(22) << mathLevel << "|"<< endl;
+                cout << " |----------------------------------|" << endl;
+                cout << endl;
             }
+
             totalCorrect = 0; // clears total correct
             totalIncorrect = 0; // clears total incorrect
         }

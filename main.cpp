@@ -85,6 +85,7 @@ int main() {
             "! So you have finally found me. If you truly seek the knowledge hidden within these ancient halls," <<
             endl;
     cout << " you must first prove your mind is sharp." << endl;
+
     // start of loop
 do {
     questionNumber++; // each loop, it adds one to question each time the user responds yes
@@ -96,12 +97,14 @@ do {
 
     rightNum = ((rand() % LevelRange) + 1); // Value from 1-whatever level the user is
     leftNum = ((rand() % LevelRange) + 1); // Value from 1-whatever level the user is
+
     // Ensures that Left num is the larger number
     if (leftNum < rightNum) {
         temp = leftNum;
         leftNum = rightNum;
         rightNum = temp;
     }
+
     //Switch to calculate the correct answer and which math operator to display
     switch (mathType) {
         case MT_ADD: // addition
@@ -160,17 +163,18 @@ do {
             cout << "Good job! You Got The Question Right!" << endl;
             totalCorrect++;
             break;
+
         } else {
             totalIncorrect++;
             if (attempt < MAX_ATTEMPTS) { // IF wrong, your number of attempts goes up
                 cout << "Not quite, apprentice!" << endl;
                 cout << "You have " << MAX_ATTEMPTS - attempt << " attempets left" << endl;
+
             } else { // Runs if the user gets three incorrect
                 cout << "I'm So Disappointed In You Apprentice..." << endl;
                 cout << "The correct answer was " << correctAns << "." << endl;
                 totalIncorrect++;
             }
-
         }
     } // End of For
 
@@ -182,7 +186,8 @@ do {
         totalIncorrect = 0;
         cout << "You have leveled up to level " << mathLevel << "!" << endl;
         cout << "Numbers will now go up to " << LevelRange << "." << endl;
-    } // leveling down
+    }
+    // leveling down
         else if (totalIncorrect >= 3) {
             if (LevelRange > LEVEL_RANGE) {
                 mathLevel--;
@@ -205,6 +210,7 @@ while (true)  { // asks the user if they want another question
 
     for (int i = 0; i < userInput.length(); i++) {
         userInput[i] = tolower(userInput[i]);
+
     }
     // user chooses yes or no
     if (userInput == "y" || userInput == "yes" ||
@@ -213,10 +219,6 @@ while (true)  { // asks the user if they want another question
             }
     cout << "Please enter y, yes, n, no" << endl;
 }
-
-
-
-
 
 } while (userInput == "y" || userInput == "yes"); // User's answer to the yes or no
 

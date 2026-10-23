@@ -49,7 +49,7 @@ int main() {
     cout <<
             "(*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*]"
             << endl;
-    cout << "                       {*} Welcome to the tower of the wizard of magical math tutoring! (V1) {*}" << endl;
+    cout << "                       {*} Welcome to the tower of the wizard of magical math tutoring! (V3) {*}" << endl;
     cout << R"(
 ,---.    ,---.   ____   ,---------. .---.  .---.    .--.      .--..-./`)  ____..--'   ____    .-------.     ______
 |    \  /    | .'  __ `.\          \|   |  |_ _|    |  |_     |  |\ .-.')|        | .'  __ `. |  _ _   \   |    _ `''.

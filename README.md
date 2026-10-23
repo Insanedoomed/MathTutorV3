@@ -378,6 +378,44 @@ Brayden what is 1+1?
 Process finished with exit code 0
 
 // if we missed anything please let us know. Also we are not sure if it was supposed to be 3 attempts per level or question so we did each question.
+
+// Wrong Math type or doesnt exist
+    {*} Welcome to the tower of the wizard of magical math tutoring! (V1) {*}
+
+,---.    ,---.   ____   ,---------. .---.  .---.    .--.      .--..-./`)  ____..--'   ____    .-------.     ______
+|    \  /    | .'  __ `.\          \|   |  |_ _|    |  |_     |  |\ .-.')|        | .'  __ `. |  _ _   \   |    _ `''.
+|  ,  \/  ,  |/   '  \  \`--.  ,---'|   |  ( ' )    | _( )_   |  |/ `-' \|   .-'  '/   '  \  \| ( ' )  |   | _ | ) _  \
+|  |\_   /|  ||___|  /  |   |   \   |   '-(_{;}_)   |(_ o _)  |  | `-'`"`|.-'.'   /|___|  /  ||(_ o _) /   |( ''_'  ) |
+|  _( )_/ |  |   _.-`   |   :_ _:   |      (_,_)    | (_,_) \ |  | .---.    /   _/    _.-`   || (_,_).' __ | . (_) `. |
+| (_ o _) |  |.'   _    |   (_I_)   | _ _--.   |    |  |/    \|  | |   |  .'._( )_ .'   _    ||  |\ \  |  ||(_    ._) '
+|  (_,_)  |  ||  _( )_  |  (_(=)_)  |( ' ) |   |    |  '  /\  `  | |   |.'  (_'o._)|  _( )_  ||  | \ `'   /|  (_.\.' /
+|  |      |  |\ (_ o _) /   (_I_)   (_{;}_)|   |    |    /  \    | |   ||    (_,_)|\ (_ o _) /|  |  \    / |       .'
+'--'      '--' '.(_,_).'    '---'   '(_,_) '---'    `---'    `---` '---'|_________| '.(_,_).' ''-'   `'-'  '-----'`
+
+
+
+(*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*]
+
+A wise wizards words:
+        (*) What's a wizard's favorite school subject? spell-gebra!
+        (*) Why did the sorcerer break his calculator? He wanted to do math-a-magics in his head!
+        (*) What is a witch's favorite shape? A Hex-agon!
+        (*) What do you call a snake that is 3.14 feet long? A Pi-thon!
+
+(*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*](*)[*]{*}[*]
+
+What is your name young apprentice?
+w
+
+
+Ah... w! So you have finally found me. If you truly seek the knowledge hidden within these ancient halls,
+ you must first prove your mind is sharp.
+Invalid question type: 5
+Program ended with an error -1
+Please report this error to Brayden Tolle or Joe Bracht
+
+Process finished with exit code -1
+
 ```
 
 [Back to Top](#math-tutor-v1)

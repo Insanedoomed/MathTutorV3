@@ -168,12 +168,15 @@ do {
         if (userAnswer == correctAns) {
             cout << "Good job! You Got The Question Right!" << endl;
             cout << endl;
+
             totalCorrect++;
+
             break;
 
         } else {
             totalIncorrect++;
             if (attempt < MAX_ATTEMPTS) { // IF wrong, your number of attempts goes up
+
                 cout << "Not quite, apprentice!" << endl;
                  cout << endl;
                 cout << "You have " << MAX_ATTEMPTS - attempt << " attempts left" << endl;
@@ -190,22 +193,35 @@ do {
 
     // Leveling up
     if (totalCorrect >= 3) {
+
         mathLevel++;
+
         LevelRange += LEVEL_RANGE;
         totalCorrect = 0;// clears it for next level.
         totalIncorrect = 0;// clears it for next level.
+
         questionNumber = 0;// Sets the question to 0 to clear it for the new level. EX: question 1 out of LVL 3
-        cout << "You have leveled up to level " << mathLevel << "!" << endl;
-        cout << "Numbers will now go up to " << LevelRange << "." << endl;
+
+        cout << "You have Advanced to the next level" << endl;
+        cout << " |----------------------------------|" << endl;
+        cout << " | NumUp: " << left << setw(24)  << LevelRange << "|"<< endl;;
+        cout << " | LevelUp: " << left << setw(22) << mathLevel << "|"<< endl;
+        cout << " |----------------------------------|" << endl;
+        cout << endl;
     }
     // leveling down
-        else if (totalIncorrect >= 3) {
+        else if (totalIncorrect >= 3) {\
+
             if (LevelRange > LEVEL_RANGE) {
+
                 mathLevel--;
+
                 LevelRange = LEVEL_RANGE;
+
                 totalCorrect = 0;// clears it for next level.
                 totalIncorrect = 0;// clears it for next level.
                 questionNumber = 0; // Sets the question to 0 to clear it for the new level. EX: question 1 out of LVL 2
+
                 cout << " |----------------------------------|" << endl;
                 cout << " | CorrectAnswer: " << left << setw(18) << correctAns << "|" << endl;
                 cout << " | NumDown: " << left << setw(24)  << LevelRange << "|"<< endl;;

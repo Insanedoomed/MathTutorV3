@@ -204,8 +204,8 @@ do {
 
         cout << "You have Advanced to the next level" << endl;
         cout << " |----------------------------------|" << endl;
-        cout << " | NumUp: " << left << setw(24)  << LevelRange << "|"<< endl;;
-        cout << " | LevelUp: " << left << setw(22) << mathLevel << "|"<< endl;
+        cout << " | NumUp: " << left << setw(26)  << LevelRange << "|"<< endl;;
+        cout << " | LevelUp: " << left << setw(24) << mathLevel << "|"<< endl;
         cout << " |----------------------------------|" << endl;
         cout << endl;
     }

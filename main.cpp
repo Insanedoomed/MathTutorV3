@@ -17,14 +17,18 @@ and then it outputs an end of program message.
 #include <iomanip> // Adds for width issues for our box (We asked jesse how to)
 
 using namespace std; //sets standard namespace
-
+//initializing variables
 //start of the main function; Joe is handling the variable documentation from Brayden's computer
 int main() {
     srand(time(0)); // Seed first; used to randomize the numeric operator (+,-,*,/)
     const int MAX_ATTEMPTS = 3; // Our max attempts; stays the same throughout program
     const int LEVEL_RANGE = 10; // Starting range of 1-10; adds ten each level up
 
-    //initializing variables
+    enum MathType { MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4 }; // Our Enum for all the problems
+
+    MathType mathType = MT_ADD; // sets MathType to a one
+
+
 
     string userInput = "?";
     double userAnswer; // The user's answer to the math question
@@ -91,9 +95,6 @@ int main() {
     // start of loop
     do {
         questionNumber++; // each loop, it adds one to question each time the user responds yes
-        enum MathType { MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4 }; // Our Enum for all the problems
-
-        MathType mathType = MT_ADD; // sets MathType to a one
 
         mathType = static_cast<MathType>(rand() % 4 + 1); //Turning into random
 

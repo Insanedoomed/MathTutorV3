@@ -213,7 +213,7 @@ int main() {
             if (LevelRange > LEVEL_RANGE) {
                 mathLevel--;
 
-                LevelRange = LEVEL_RANGE;
+                LevelRange -= LEVEL_RANGE;
 
                 totalCorrect = 0; // clears it for next level.
                 totalIncorrect = 0; // clears it for next level.

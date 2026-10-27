@@ -29,7 +29,6 @@ int main() {
     MathType mathType = MT_ADD; // sets MathType to a one
 
 
-
     string userInput = "?";
     double userAnswer; // The user's answer to the math question
     double correctAns; // The correct answer\

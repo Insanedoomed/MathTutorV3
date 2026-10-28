@@ -99,12 +99,7 @@ int main() {
         rightNum = ((rand() % LevelRange) + 1); // Value from 1-whatever level the user is
         leftNum = ((rand() % LevelRange) + 1); // Value from 1-whatever level the user is
 
-        // Ensures that Left num is the larger number
-        if (leftNum < rightNum) {
-            temp = leftNum;
-            leftNum = rightNum;
-            rightNum = temp;
-        }
+
 
         //Switch to calculate the correct answer and which math operator to display
         switch (mathType) {
@@ -171,13 +166,13 @@ int main() {
                 totalCorrect++;
                 break;
             } else {
+                totalIncorrect++;
                 if (attempt < MAX_ATTEMPTS) {
                     // IF wrong, your number of attempts goes up
                     cout << "Not quite, apprentice!" << endl;
                     cout << endl;
                 } else {
                     // Runs if the user gets three incorrect
-                    totalIncorrect++;
                     cout << "I'm So Disappointed In You Apprentice..." << endl;
                     cout << "You should've gotten that right..." << endl;
                     cout << " |----------------------------------|" << endl;
@@ -190,7 +185,6 @@ int main() {
 
         // Leveling up
         if (totalCorrect >= 3) {
-
             mathLevel++;
 
             LevelRange += LEVEL_RANGE;
@@ -207,7 +201,7 @@ int main() {
             cout << endl;
         }
         // leveling down
-        else if (totalIncorrect >= 1) {
+        else if (totalIncorrect >= 3) {
             if (LevelRange > LEVEL_RANGE) {
                 mathLevel--;
 
@@ -216,6 +210,7 @@ int main() {
                 totalCorrect = 0; // clears it for next level.
                 totalIncorrect = 0; // clears it for next level.
                 questionNumber = 0; // Sets the question to 0 to clear it for the new level. EX: question 1 out of LVL 2
+
                 cout << "You have Advanced down a level" << endl;
                 cout << " |----------------------------------|" << endl;
                 cout << " | NumDown: " << left << setw(24) << LevelRange << "|" << endl;;

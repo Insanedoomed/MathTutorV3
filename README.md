@@ -45,7 +45,7 @@
 
 MathTutorV3 is a console math tutor wrapped in a wizard theme. It greets you with ASCII art and a few terrible math puns, asks for your name, then quizzes you with randomly generated addition, subtraction, multiplication, and division problems.
 
-Answer correctly and the numbers get bigger. Miss a question and the tower eases up on you. You keep going for as long as you like.
+Answer correctly and the numbers get bigger. Miss three questions and the tower eases up on you. You keep going for as long as you like.
 
 > **Course project:** CSC150 (Section 3), built as a pair project by Joe Bracht and Brayden Tolle.
 
@@ -107,7 +107,7 @@ mathType = static_cast<MathType>(rand() % 4 + 1);
 3. `+ 1` shifts that to **1, 2, 3, or 4**, which lines up with the enum values above.
 4. `static_cast<MathType>(...)` converts the plain `int` into a `MathType`, since C++ does not do that conversion automatically.
 
-Why 1 to 4 and not 0 to 3? The enum is numbered starting at 1 so the first operation is "number 1", which reads naturally. The `switch` also has a `default` case that catches any value outside 1 to 4, so if someone edits the range by mistake the program reports it (see [Test 10](#test-10-invalid-question-type)) instead of quietly doing nothing.
+Why 1 to 4 and not 0 to 3? The enum is numbered starting at 1 so the first operation is "number 1", which reads naturally. The `switch` also has a `default` case that catches any value outside 1 to 4, so if someone edits the range by mistake the program reports it (see [Test 11](#test-11-invalid-question-type)) instead of quietly doing nothing.
 
 The same trick is used for the operands: `rand() % LevelRange + 1` gives a number from **1 to `LevelRange`**. We start at 1 instead of 0 because a 0 would make multiplication trivial and a 0 divisor would crash division.
 
@@ -119,7 +119,7 @@ The same trick is used for the operands: `rand() % LevelRange + 1` gives a numbe
 | Starting number range | 1 to 10 |
 | Attempts per question | 3 |
 | **Level up** | After **3 correct answers** at the current level: the level goes up by 1 and the range grows by 10 |
-| **Level down** | After **1 missed question** (all 3 attempts used) while above level 1: the level goes down by 1 and the range goes down by 10 |
+| **Level down** | After **3 missed questions** (all 3 attempts used on each) while above level 1: the level goes down by 1 and the range goes down by 10 |
 | Level 1 misses | No level box is shown and the level stays at 1; you can't go below level 1 |
 | On any level change | Correct/missed counters and the question counter reset to 0 |
 
@@ -164,10 +164,11 @@ Each test below is collapsed. Click **Click to view the console output** under a
 | 4 | [Invalid input](#test-4-invalid-input) | The user types a letter instead of a number |
 | 5 | [Replay prompt validation](#test-5-replay-prompt-validation) | The replay prompt rejects anything that is not y, yes, n, or no, and ignores capitalization (`YES`, `No`) |
 | 6 | [Level up](#test-6-level-up) | Three correct answers at level 1 (one needed a retry) move the user to level 2 |
-| 7 | [Level down from level 3](#test-7-level-down-from-level-3) | The user is at level 3 (range 30) and misses one question by using all 3 attempts |
-| 8 | [Level down from level 2](#test-8-level-down-from-level-2) | Same rule one level lower: a miss at level 2 drops the user to level 1 and the range goes from 20 to 10 |
-| 9 | [No level down at level 1](#test-9-no-level-down-at-level-1) | Missing a question at level 1 does not show a level box: there is no lower level |
-| 10 | [Invalid question type](#test-10-invalid-question-type) | The error path in the `default` case of the `switch` |
+| 7 | [Level down from level 3](#test-7-level-down-from-level-3) | The user is at level 3 (range 30) and misses three questions (all 3 attempts used on each) |
+| 8 | [Level down from level 2](#test-8-level-down-from-level-2) | Same rule one level lower: three missed questions at level 2 drop the user to level 1 and the range goes from 20 to 10 |
+| 9 | [Not enough misses to level down](#test-9-not-enough-misses-to-level-down) | One or two missed questions do not change the level |
+| 10 | [No level down at level 1](#test-10-no-level-down-at-level-1) | Missing three questions at level 1 does nothing special: there is no lower level, so no level box is shown, the level stays 1, and the question counter keeps counting (question 4 next) |
+| 11 | [Invalid question type](#test-11-invalid-question-type) | The error path in the `default` case of the `switch` |
 
 ### Test 1 Correct answer on the first try
 
@@ -592,7 +593,7 @@ Thank you this is all for now!
 
 ### Test 7 Level down from level 3
 
-The user is at level 3 (range 30) and misses one question by using all 3 attempts. They drop to level 2 and the range goes down by 10, from 30 to 20. The question counter resets.
+The user is at level 3 (range 30) and misses three questions (all 3 attempts used on each). They drop to level 2 and the range goes down by 10, from 30 to 20. The question counter resets. Attempts 1 and 2 of questions 2 and 3 are trimmed to keep this short; they look the same as question 1.
 
 <details>
 <summary><b>Click to view the console output</b></summary>
@@ -601,7 +602,7 @@ The user is at level 3 (range 30) and misses one question by using all 3 attempt
 [ ...intro, then the user is at level 3... ]
 
  |----------------------------------|
- | Question: 5                      |
+ | Question: 1                      |
  | Attempts: 1 out of 3             |
  | MathLevel: 3                     |
  |----------------------------------|
@@ -613,7 +614,7 @@ bray, what is 23+19?
 Not quite, apprentice!
 
  |----------------------------------|
- | Question: 5                      |
+ | Question: 1                      |
  | Attempts: 2 out of 3             |
  | MathLevel: 3                     |
  |----------------------------------|
@@ -625,7 +626,7 @@ bray, what is 23+19?
 Not quite, apprentice!
 
  |----------------------------------|
- | Question: 5                      |
+ | Question: 1                      |
  | Attempts: 3 out of 3             |
  | MathLevel: 3                     |
  |----------------------------------|
@@ -638,6 +639,48 @@ I'm So Disappointed In You Apprentice...
 You should've gotten that right...
  |----------------------------------|
  | CorrectAnswer: 42                |
+ |----------------------------------|
+
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+[ question 2: attempts 1 and 2 omitted, both wrong ]
+
+ |----------------------------------|
+ | Question: 2                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 3                     |
+ |----------------------------------|
+
+bray, what is 28-9?
+
+1
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 19                |
+ |----------------------------------|
+
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+[ question 3: attempts 1 and 2 omitted, both wrong ]
+
+ |----------------------------------|
+ | Question: 3                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 3                     |
+ |----------------------------------|
+
+bray, what is 27*5?
+
+1
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 135               |
  |----------------------------------|
 
 You have Advanced down a level
@@ -674,7 +717,7 @@ Thank you this is all for now!
 
 ### Test 8 Level down from level 2
 
-Same rule one level lower: a miss at level 2 drops the user to level 1 and the range goes from 20 to 10.
+Same rule one level lower: three missed questions at level 2 drop the user to level 1 and the range goes from 20 to 10.
 
 <details>
 <summary><b>Click to view the console output</b></summary>
@@ -722,6 +765,48 @@ You should've gotten that right...
  | CorrectAnswer: 20                |
  |----------------------------------|
 
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+[ question 2: attempts 1 and 2 omitted, both wrong ]
+
+ |----------------------------------|
+ | Question: 2                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 2                     |
+ |----------------------------------|
+
+bray, what is 17+13?
+
+5
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 30                |
+ |----------------------------------|
+
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+[ question 3: attempts 1 and 2 omitted, both wrong ]
+
+ |----------------------------------|
+ | Question: 3                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 2                     |
+ |----------------------------------|
+
+bray, what is 18*7?
+
+9
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 126               |
+ |----------------------------------|
+
 You have Advanced down a level
  |----------------------------------|
  | NumDown: 10                      |
@@ -739,9 +824,85 @@ Thank you this is all for now!
 
 [Back to the test list](#console-output-testing)
 
-### Test 9 No level down at level 1
+### Test 9 Not enough misses to level down
 
-Missing a question at level 1 does not show a level box: there is no lower level. The question counter keeps counting (question 2 next) and the level stays 1.
+One or two missed questions do not change the level. Here the user misses one question at level 2, the level box does not appear, and the next question is question 2 at level 2.
+
+<details>
+<summary><b>Click to view the console output</b></summary>
+
+```text
+[ ...intro, then the user is at level 2... ]
+
+ |----------------------------------|
+ | Question: 1                      |
+ | Attempts: 1 out of 3             |
+ | MathLevel: 2                     |
+ |----------------------------------|
+
+bray, what is 280/14?
+
+2
+
+Not quite, apprentice!
+
+ |----------------------------------|
+ | Question: 1                      |
+ | Attempts: 2 out of 3             |
+ | MathLevel: 2                     |
+ |----------------------------------|
+
+bray, what is 280/14?
+
+3
+
+Not quite, apprentice!
+
+ |----------------------------------|
+ | Question: 1                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 2                     |
+ |----------------------------------|
+
+bray, what is 280/14?
+
+4
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 20                |
+ |----------------------------------|
+
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+ |----------------------------------|
+ | Question: 2                      |
+ | Attempts: 1 out of 3             |
+ | MathLevel: 2                     |
+ |----------------------------------|
+
+bray, what is 16+6?
+
+22
+
+Good job! You Got The Question Right!
+
+Would you like a other question Apprentice? (y=yes/n=no
+n
+
+This is MathTutorV3, thanks for playing!
+Thank you this is all for now!
+```
+
+</details>
+
+[Back to the test list](#console-output-testing)
+
+### Test 10 No level down at level 1
+
+Missing three questions at level 1 does nothing special: there is no lower level, so no level box is shown, the level stays 1, and the question counter keeps counting (question 4 next).
 
 <details>
 <summary><b>Click to view the console output</b></summary>
@@ -792,8 +953,50 @@ You should've gotten that right...
 Would you like a other question Apprentice? (y=yes/n=no
 y
 
+[ question 2: attempts 1 and 2 omitted ]
+
  |----------------------------------|
  | Question: 2                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 1                     |
+ |----------------------------------|
+
+bray, what is 7*3?
+
+5
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 21                |
+ |----------------------------------|
+
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+[ question 3: attempts 1 and 2 omitted ]
+
+ |----------------------------------|
+ | Question: 3                      |
+ | Attempts: 3 out of 3             |
+ | MathLevel: 1                     |
+ |----------------------------------|
+
+bray, what is 9-2?
+
+1
+
+I'm So Disappointed In You Apprentice...
+You should've gotten that right...
+ |----------------------------------|
+ | CorrectAnswer: 7                 |
+ |----------------------------------|
+
+Would you like a other question Apprentice? (y=yes/n=no
+y
+
+ |----------------------------------|
+ | Question: 4                      |
  | Attempts: 1 out of 3             |
  | MathLevel: 1                     |
  |----------------------------------|
@@ -815,7 +1018,7 @@ Thank you this is all for now!
 
 [Back to the test list](#console-output-testing)
 
-### Test 10 Invalid question type
+### Test 11 Invalid question type
 
 The error path in the `default` case of the `switch`. With the current `rand() % 4 + 1` this cannot happen, so to see it, temporarily change that line to `rand() % 5 + 1` and run until a 5 comes up. (The last line is printed by the IDE, not the program.)
 
@@ -863,7 +1066,7 @@ These are the console outputs from earlier versions of the program, kept as they
 | V2 | [Full session](#v2-full-session) | A complete V2 run: a retry, a level up to level 2, three misses that level the user down, and the goodbye |
 | V2 | [Invalid input](#v2-invalid-input) | The user types a letter instead of a number |
 | V2 | [Invalid question type](#v2-invalid-question-type) | The error path with both maintainers named |
-| V3 early build | [Real session from CLion](#v3-early-build-real-session-from-clion) | A run from the V3 build before the level-down rule changed |
+| V3 | [Real session from CLion](#v3-real-session-from-clion) | An unedited V3 run: two right answers, a retry that earns the level up, then one missed question at level 2 |
 
 ### V1 Right answer
 
@@ -1331,9 +1534,9 @@ Process finished with exit code -1
 
 [Back to the previous versions list](#previous-versions-v1-and-v2-outputs)
 
-### V3 early build Real session from CLion
+### V3 Real session from CLion
 
-A run from the V3 build before the level-down rule changed. At that time it took 3 failed questions to level down, so the miss at the end did not drop the level. The first line is the path of the built program. (It was stopped at the replay prompt.)
+An unedited V3 run: two right answers, a retry that earns the level up, then one missed question at level 2. One miss does not level you down, since it takes three missed questions. The first line is the path of the built program. (It was stopped at the replay prompt.)
 
 <details>
 <summary><b>Click to view the console output</b></summary>
@@ -1486,17 +1689,17 @@ Would you like a other question Apprentice? (y=yes/n=no
 
 ## Code Tour
 
-Everything lives in a single `main()` function. The constants and variables are declared at the top of `main`, followed by the program logic. The `MathType` enum is declared inside the question loop.
+Everything lives in a single `main()` function. The constants, the `MathType` enum, and the variables are declared at the top of `main`, followed by the program logic.
 
 | Section | What it does |
 |---|---|
 | **Constants** | `MAX_ATTEMPTS = 3` and `LEVEL_RANGE = 10` |
-| **Variables** | Every variable used by the program (the `MathType` enum is declared in the question loop) |
+| **Enum and variables** | The `MathType` enum, then every variable used by the program |
 | **Setup** | Seeds `rand()` with `time(0)` before anything else |
 | **Intro** | Prints the banner and jokes, then reads the user's name with `getline` |
 | **Outer `do/while`** | One pass per question; repeats while the user answers `y` or `yes` |
 | **Random question** | `rand() % 4 + 1` picks the operation; `rand() % LevelRange + 1` picks each number |
-| **`switch`** | Computes the correct answer and picks the operator symbol; the `default` case is a safety net that exits with error `-1` |
+| **`switch`** | Computes the correct answer and picks the operator symbol. Subtraction swaps the numbers if needed so the larger one is on the left, and the `default` case is a safety net that exits with error `-1` |
 | **Attempt `for` loop** | Up to 3 tries; draws the status box, validates input with `while (!(cin >> userAnswer))`, and checks the answer. `totalIncorrect` goes up only when attempts run out |
 | **Level logic** | `totalCorrect` and `totalIncorrect` decide whether to level up or down |
 | **Replay prompt** | Inner `while (true)` loop lowercases the input with `tolower` until it's `y`, `yes`, `n`, or `no` |
@@ -1517,9 +1720,7 @@ Everything lives in a single `main()` function. The constants and variables are 
 ## Known Quirks & Roadmap
 
 - [ ] **Wording.** The replay prompt reads "a other" and is missing its closing `)`, and the level-down message says "Advanced down a level".
-- [ ] **Variables.** The `MathType` enum and the loop counters (`attempt` in the `for`, `i` in the lowercase loop) are declared inside the code instead of at the top of `main`. The `for` loop's `attempt` also hides the outer `attempt`.
-- [ ] **Stray backslash.** One line ends in a `\` (after the `correctAns` comment). It compiles but should be removed.
-- [ ] **Header.** `<ctype.h>` would be `<cctype>` in C++.
+- [ ] **Loop counters.** The `for` loop's `attempt` hides the outer `attempt` (the outer one is never used), and `i` in the lowercase loop is declared inside the loop instead of at the top of `main`.
 - [ ] **Decimal answers.** The answer is read as a `double` and compared with `==`. That is fine for whole-number answers but would need care if questions ever had decimals.
 - [ ] **Unreachable default.** The `default` case in the `switch` can't trigger while the range is `rand() % 4 + 1`. It is there as a safety net.
 - [ ] **Ideas.** Track a final score, set a maximum level, add difficulty modes, and move question generation into its own function.

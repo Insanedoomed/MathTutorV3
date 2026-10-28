@@ -13,7 +13,7 @@ and then it outputs an end of program message.
 #include <string> // for string data types
 #include <ctime> // for time seeding
 #include <limits> // for the use of numeric_limits
-#include <ctype.h> // Checks numbers and characters
+#include <cctype> // Checks numbers and characters
 #include <iomanip> // Adds for width issues for our box (We asked jesse how to)
 
 using namespace std; //sets standard namespace
@@ -27,7 +27,6 @@ int main() {
     enum MathType { MT_ADD = 1, MT_SUB = 2, MT_MUL = 3, MT_DIV = 4 }; // Our Enum for all the problems
 
     MathType mathType = MT_ADD; // sets MathType to a one
-
 
     string userInput = "?";
     double userAnswer; // The user's answer to the math question
@@ -169,9 +168,7 @@ int main() {
             if (userAnswer == correctAns) {
                 cout << "Good job! You Got The Question Right!" << endl;
                 cout << endl;
-
                 totalCorrect++;
-
                 break;
             } else {
                 if (attempt < MAX_ATTEMPTS) {
@@ -193,6 +190,7 @@ int main() {
 
         // Leveling up
         if (totalCorrect >= 3) {
+
             mathLevel++;
 
             LevelRange += LEVEL_RANGE;
